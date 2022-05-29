@@ -21,22 +21,29 @@ public:
         }
     }
 
-    int count()
+    int count(){ return m_count; }
+
+    bool connected(int p, int q){ return find(p) == find(q); }
+
+    void printUF()
     {
-        return m_count;
+        for (int j = 0; j < m_id.size(); j++)
+        {
+            std::cout << j;
+            std::cout << ' ';
+        }
+        std::cout << '\n';
+        for (int j = 0; j < m_id.size(); j++)
+        {
+            std::cout << m_id[j];
+            std::cout << ' ';
+        }
+        std::cout << '\n';
     }
 
-    bool connected(int p, int q)
-    {
-        return find(p) == find(q);
-    }
+    /*----------quick-find algorithm begin----------*/
+    int find(int p){ return m_id[p]; }
 
-    int find(int p)
-    {
-        return m_id[p];
-    }
-
-    // quick-find algorithm
     void Union(int p, int q)
     {
         // 将p和q归并到相同的分量中
@@ -54,22 +61,7 @@ public:
         }
         m_count--;
     }
-
-    void printUF()
-    {
-        for (int j = 0; j < m_id.size(); j++)
-        {
-            std::cout << j;
-            std::cout << ' ';
-        }
-        std::cout << '\n';
-        for (int j = 0; j < m_id.size(); j++)
-        {
-            std::cout << m_id[j];
-            std::cout << ' ';
-        }
-        std::cout << '\n';
-    }
+    /*----------quick-find algorithm end----------*/
 };
 
 int main()
@@ -95,6 +87,6 @@ int main()
         std::cout << std::to_string(p) + " " + std::to_string(q) << '\n';
     }
     std::cout << uf.count();
-    std::cout << "components" << '\n';
+    std::cout << " components." << '\n';
     return 0;
 }
