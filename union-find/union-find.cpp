@@ -41,27 +41,50 @@ public:
         std::cout << '\n';
     }
 
-    /*----------quick-find algorithm begin----------*/
-    int find(int p){ return m_id[p]; }
+    ///*----------quick-find algorithm begin----------*/
+    //int find(int p){ return m_id[p]; }
+
+    //void Union(int p, int q)
+    //{
+    //    // 将p和q归并到相同的分量中
+    //    int pId = find(p);
+    //    int qId = find(q);
+
+    //    // 将p的分量重命名为q的分量
+    //    m_id[p] = qId;
+    //    for (int i = 0; i < m_id.size(); i++)
+    //    {
+    //        if (m_id[i] == pId)
+    //        {
+    //            m_id[i] = qId;
+    //        }
+    //    }
+    //    m_count--;
+    //}
+    ///*----------quick-find algorithm end----------*/
+
+    /*----------quick-union algorithm begin----------*/
+    int find(int p)
+    {
+        while (m_id[p] != p)
+        {
+            p = m_id[p];
+        }
+        return p;
+    }
 
     void Union(int p, int q)
     {
-        // 将p和q归并到相同的分量中
-        int pId = find(p);
-        int qId = find(q);
+        int rootP{ find(p) };
+        int rootQ{ find(q) };
 
-        // 将p的分量重命名为q的分量
-        m_id[p] = qId;
-        for (int i = 0; i < m_id.size(); i++)
+        if (rootP != rootQ)
         {
-            if (m_id[i] == pId)
-            {
-                m_id[i] = qId;
-            }
+            m_id[rootP] = rootQ;
+            m_count--;
         }
-        m_count--;
     }
-    /*----------quick-find algorithm end----------*/
+    /*----------quick-union algorithm end----------*/
 };
 
 int main()
