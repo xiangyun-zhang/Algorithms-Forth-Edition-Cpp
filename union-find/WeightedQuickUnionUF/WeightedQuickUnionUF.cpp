@@ -2,22 +2,25 @@
 #include <vector>
 #include <string>
 
-class UF
+class WeightedUnionFindUF
 {
 private:
     // 分量id（以触点作为索引）
     std::vector<int> m_id;
+    // 以各个触点为根节点对应的分量大小
+    std::vector<int> m_size;
     // 分量数量
     int m_count;
 
 public:
-    UF(int N)
+    WeightedUnionFindUF(int N)
     {
         // 初始化分量id数组
         m_count = N;
         for (int i = 0; i < N; i++)
         {
             m_id.push_back(i);
+            m_size.push_back(1);
         }
     }
 
@@ -41,7 +44,7 @@ public:
         std::cout << '\n';
     }
 
-    /*----------quick-union algorithm begin----------*/
+    /*----------weighted quick-union algorithm begin----------*/
     int find(int p)
     {
         while (m_id[p] != p)
@@ -58,32 +61,42 @@ public:
 
         if (rootP != rootQ)
         {
-            m_id[rootP] = rootQ;
+            if (m_size[rootP] < m_size[rootQ])
+            {
+                m_id[rootP] = rootQ;
+                m_size[rootQ] += m_size[rootP];
+            }
+            else
+            {
+                m_id[rootQ] = rootP;
+                m_size[rootP] += m_size[rootQ];
+            }
             m_count--;
         }
     }
-    /*----------quick-union algorithm end----------*/
+    /*----------weighted quick-union algorithm end----------*/
 };
 
 int main()
 {
-    std::vector<int> Ps{ 4,3,6,9,2,5,7,6,1,6 };
-    std::vector<int> Qs{ 3,8,5,4,1,0,2,1,0,7 };
+    std::vector<int> Ps{ 4,3,6,9,2,8,5,7,6,1,6 };
+    std::vector<int> Qs{ 3,8,5,4,1,9,0,2,1,0,7 };
 
-    int N = Ps.size();
-    UF uf{ N };
+    int N = 10;
+    WeightedUnionFindUF uf{ N };
     uf.printUF();
 
     for (int i = 0; i < Ps.size(); i++)
     {
         int p = Ps[i];
         int q = Qs[i];
-        std::cout << std::to_string(p) + " " + std::to_string(q) << '\n';
+
         if (uf.connected(p, q))
         {
             continue;
         }
 
+        uf.Union(p, q);
         std::cout << std::to_string(p) + " " + std::to_string(q) << '\n';
         uf.printUF();
         std::cout << '\n';

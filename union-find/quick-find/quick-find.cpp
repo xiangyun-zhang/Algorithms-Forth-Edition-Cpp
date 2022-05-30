@@ -71,10 +71,10 @@ int main()
 
     int N = Ps.size();
     UF uf{ N };
+    uf.printUF();
 
     for (int i = 0; i < Ps.size(); i++)
     {
-        uf.printUF();
         int p = Ps[i];
         int q = Qs[i];
         std::cout << std::to_string(p) + " " + std::to_string(q) << '\n';
@@ -83,8 +83,9 @@ int main()
             continue;
         }
 
-        uf.Union(p, q);
         std::cout << std::to_string(p) + " " + std::to_string(q) << '\n';
+        uf.printUF();
+        std::cout << '\n';
     }
     std::cout << uf.count();
     std::cout << " components." << '\n';
