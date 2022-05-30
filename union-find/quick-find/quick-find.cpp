@@ -21,9 +21,9 @@ public:
         }
     }
 
-    int count(){ return m_count; }
+    int count() { return m_count; }
 
-    bool connected(int p, int q){ return find(p) == find(q); }
+    bool connected(int p, int q) { return find(p) == find(q); }
 
     void printUF()
     {
@@ -41,50 +41,27 @@ public:
         std::cout << '\n';
     }
 
-    ///*----------quick-find algorithm begin----------*/
-    //int find(int p){ return m_id[p]; }
-
-    //void Union(int p, int q)
-    //{
-    //    // 将p和q归并到相同的分量中
-    //    int pId = find(p);
-    //    int qId = find(q);
-
-    //    // 将p的分量重命名为q的分量
-    //    m_id[p] = qId;
-    //    for (int i = 0; i < m_id.size(); i++)
-    //    {
-    //        if (m_id[i] == pId)
-    //        {
-    //            m_id[i] = qId;
-    //        }
-    //    }
-    //    m_count--;
-    //}
-    ///*----------quick-find algorithm end----------*/
-
-    /*----------quick-union algorithm begin----------*/
-    int find(int p)
-    {
-        while (m_id[p] != p)
-        {
-            p = m_id[p];
-        }
-        return p;
-    }
+    /*----------quick-find algorithm begin----------*/
+    int find(int p){ return m_id[p]; }
 
     void Union(int p, int q)
     {
-        int rootP{ find(p) };
-        int rootQ{ find(q) };
+        // 将p和q归并到相同的分量中
+        int pId = find(p);
+        int qId = find(q);
 
-        if (rootP != rootQ)
+        // 将p的分量重命名为q的分量
+        m_id[p] = qId;
+        for (int i = 0; i < m_id.size(); i++)
         {
-            m_id[rootP] = rootQ;
-            m_count--;
+            if (m_id[i] == pId)
+            {
+                m_id[i] = qId;
+            }
         }
+        m_count--;
     }
-    /*----------quick-union algorithm end----------*/
+    /*----------quick-find algorithm end----------*/
 };
 
 int main()
