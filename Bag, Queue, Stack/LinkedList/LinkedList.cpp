@@ -1,21 +1,22 @@
 #include <iostream>
 #include <vector>
 
+template <typename T>
 class LinkedList
 {
 private:
 	struct LinkedNode
 	{
-		int val;
+		T val;
 		LinkedNode* next;
 
-		LinkedNode(int value)
+		LinkedNode(T value)
 		{
 			val = value;
 			next = nullptr;
 		}
 
-		LinkedNode(int value, LinkedNode* nextNode)
+		LinkedNode(T value, LinkedNode* nextNode)
 		{
 			val = value;
 			next = nextNode;
@@ -61,7 +62,7 @@ public:
 	}
 
 	// 在链表头部添加节点
-	void addAtHead(int value)
+	void addAtHead(T value)
 	{
 		LinkedNode* temp = new LinkedNode(value, m_dummyHead->next);
 		m_dummyHead->next = temp;
@@ -69,7 +70,7 @@ public:
 	}
 
 	// 在链表末尾添加节点
-	void addAtTail(int value)
+	void addAtTail(T value)
 	{
 		LinkedNode* temp = m_dummyHead;
 		while (temp->next != nullptr)
@@ -82,7 +83,7 @@ public:
 	}
 
 	// 在链表索引处添加节点，从0开始
-	void addAtIndex(int value, int index)
+	void addAtIndex(T value, int index)
 	{
 		// index 不合法直接返回
 		if (index > m_size - 1 || index < 0){ return; }
@@ -121,21 +122,22 @@ public:
 
 int main()
 {
-	std::vector<int> testList{ 1,2,3,4,5,6,7,8,9 };
-	LinkedList test;
-	for (int i = 0; i < testList.size(); i++)
+	// std::vector<int> testList{ 1,2,3,4,5,6,7,8,9 };
+	std::vector<float> testFloatList{ 1.1, 2.4, 5.2, 4.5 };
+	LinkedList<float> testFloat;
+	for (int i = 0; i < testFloatList.size(); i++)
 	{
-		test.addAtHead(testList[i]);
+		testFloat.addAtHead(testFloatList[i]);
 	}
-	std::cout << test.size() << '\n';
-	test.addAtTail(55);
-	test.printLinkedList();
-	std::cout << test.size() << '\n';
-	test.addAtIndex(13, 5);
-	test.printLinkedList();
-	std::cout << test.size() << '\n';
-	test.deleteAtIndex(8);
-	test.printLinkedList();
-	std::cout << test.size() << '\n';
+	std::cout << testFloat.size() << '\n';
+	
+	testFloat.addAtTail(55.0);
+	testFloat.printLinkedList();
+
+	testFloat.addAtIndex(13.8, 2);
+	testFloat.printLinkedList();
+
+	testFloat.deleteAtIndex(1);
+	testFloat.printLinkedList();
 	return 0;
 }
